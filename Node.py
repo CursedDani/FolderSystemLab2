@@ -1,6 +1,6 @@
 Nil=None
 
-class Node:
+class File:
 
 
     def __init__(self, data:str):
@@ -32,7 +32,7 @@ def isEmpty(xs):
         return True
     return False
 
-def add(ndata:int,xs:tuple):
+def add(ndata:int,xs:tuple)->tuple:
     if isEmpty(xs):
         return Cons(ndata,Nil,Nil,Nil,Nil)
     elif (n1(xs) and n2(xs) and n3(xs) and n4(xs)):
@@ -40,11 +40,11 @@ def add(ndata:int,xs:tuple):
     else:
           if not n1(xs):
                 return Cons(data(xs),add(ndata,n1(xs)),n2(xs),n3(xs),n4(xs))
-          if not n2(xs):
+          elif not n2(xs):
                 return Cons(data(xs),n1(xs),add(ndata,n2(xs)),n3(xs),n4(xs))
-          if not n3(xs):
+          elif not n3(xs):
                 return Cons(data(xs),n1(xs),n2(xs),add(ndata,n3(xs)),n4(xs))
-          if not n4(xs):
+          elif not n4(xs):
                 return Cons(data(xs),n1(xs),n2(xs),n3(xs),add(ndata,n4(xs)))
 
 def printTree(xs, indent=0, is_last=False):
@@ -78,21 +78,15 @@ def printTree(xs, indent=0, is_last=False):
 
 if __name__ == '__main__':
         X = Nil
-        b =add(1,X)
-        c = add(2,b)
-        d = add(3,c)
-        X = add(4,X)
-        X = add(5,d)
+        b =add("a",X)
+        c = add("b",b)
+        d = add("c",c)
+        X = add(4,d)
+        X = add(5,X)
         X = add(6,X)
         X = add(7,X)
         X = add(8,X)
         X = add(9,X)
         X = add(10,X)
-        X = add(11,X)
-        printTree(b)
-        print()        
-        printTree(c)
-        print()        
-        printTree(d)
-        print()        
+        X = add(11,X) 
         printTree(X)        
