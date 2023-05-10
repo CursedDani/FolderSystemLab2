@@ -1,21 +1,15 @@
 Nil=None
 
-class File:
-    def __init__(self,ndata) -> None:
-        self.name = ndata[:ndata.find(".")]
-        self.ext = ndata[ndata.find(".")+1:ndata.find(" ")+1]
-        self.size = ndata[ndata.find(" ")+1:]
+def File(ndata:str)->tuple:
+    name = ndata[:ndata.find(".")]
+    ext = ndata[ndata.find("."):ndata.find(" ")]
+    size = ndata[ndata.find(" "):]
+    return (ndata,name,ext,size)
     
-    def getWhole(self): 
-        return self.name + "." + self.ext +self.size
-    
-class Directory:
-    def __init__(self,nname:str) -> None:
-        self.name=nname
-        self.open=4
-
-    def getWhole(self):
-         return self.name
+def Directory(nname:str,open=4) -> tuple:
+    name=nname
+    vopen=open
+    return (name,vopen)
         
         
 def Cons(x,n1=Nil,n2=Nil,n3=Nil,n4=Nil):
@@ -60,7 +54,7 @@ def addC(ndata,xs:tuple)->tuple:
 
 def searchDir(xs:tuple,sname:str)->bool:
      if(xs):
-          if data(xs).name==sname and type(data(xs)) == Directory:
+          if data(data(xs))==sname and len(data(xs)) == 2:
                return True
           elif searchDir(n1(xs),sname) is True:
                return True
@@ -74,7 +68,7 @@ def searchDir(xs:tuple,sname:str)->bool:
                return False
           
 def findDir(xs:tuple,sname:str)->tuple:
-    if data(xs).name == sname and type(data(xs)) == Directory:
+    if data(data(xs)) == sname and len(data(xs)) == 2:
         return xs
     else:
         if n1(xs):
@@ -99,8 +93,7 @@ def addB(ndata,xs:tuple,type:int,pardir:str)->tuple:
               xsy = addC(f,xss)
               return xsy
     if type == 1:
-         return addFile(ndata,xs,pardir)
-
+         return Cons(data(xs),addFile(ndata,xs,pardir))
               
          
 
@@ -113,7 +106,7 @@ def printTree(xs, prefix="", is_last=True):
     # Print current node
     print(prefix, end="")
     print("└── " if is_last else "├── ", end="")
-    print(data(xs).getWhole())
+    print(data(data(xs)))
 
     # Print child nodes
     if n1(xs) and n2(xs) and n3(xs) and n4(xs):
@@ -136,6 +129,6 @@ def printTree(xs, prefix="", is_last=True):
 
 
 if __name__ == '__main__':
-    X = Cons(Directory("Root"),Cons(Directory("Dir1"),Cons(File("file1.txt 42")),Cons(File("fil.cpp 1"))),Cons(File("ss.html 12")),Cons(File("aa.jpeg 52")))
+    X = Cons(Directory("Root"),Cons(Directory("Dir1"),Cons(File("file1.txt 42")),Cons(File("fil.cpp 1"))),Cons(Directory("Dir2")),Cons(File("aa.jpeg 52")))
     Y = addB("aa.txt 12",X,1,"Dir1")
     printTree(Y)      
