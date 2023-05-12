@@ -35,26 +35,10 @@ def isEmpty(xs):
         return True
     return False
 
-def addC(ndata,xs:tuple)->tuple:
-    if isEmpty(xs):
-        return Cons(ndata,Nil,Nil,Nil,Nil)
-    elif (n1(xs) and n2(xs) and n3(xs) and n4(xs)):
-          return Cons(data(xs),addC(ndata,n1(xs)),n2(xs),n3(xs),n4(xs))
-    else:
-          if not n1(xs):
-                return Cons(data(xs),addC(ndata,n1(xs)),n2(xs),n3(xs),n4(xs))
-          elif not n2(xs):
-                return Cons(data(xs),n1(xs),addC(ndata,n2(xs)),n3(xs),n4(xs))
-          elif not n3(xs):
-                return Cons(data(xs),n1(xs),n2(xs),addC(ndata,n3(xs)),n4(xs))
-          elif not n4(xs):
-                return Cons(data(xs),n1(xs),n2(xs),n3(xs),addC(ndata,n4(xs)))
-
-
 
 def searchDir(xs:tuple,sname:str)->bool:
      if(xs):
-          if data(data(xs))==sname and len(data(xs)) == 2:
+          if data(data(xs))==sname and isDir(xs):
                return True
           elif searchDir(n1(xs),sname) is True:
                return True
@@ -66,76 +50,23 @@ def searchDir(xs:tuple,sname:str)->bool:
                return True
           else:
                return False
-'''        
-def findDir(xs:tuple,sname:str)->tuple:
-    if data(data(xs)) == sname and len(data(xs)) == 2:
-        return xs
-    else:
-        if n1(xs):
-            return xs + findDir(n1(xs),sname)
-        if n2(xs):
-            return xs + findDir(n2(xs),sname)
-        if n3(xs):
-             return xs + findDir(n3(xs),sname)
-        if n4(xs):
-             return xs + findDir(n4(xs),sname)
-'''        
-
-
-
-            
-               
           
-     
+def searchFile(xs,sname):
+     if(xs):
+          print(data(data(xs)))
+          if n1(data(xs))==sname and isFile(xs):
 
-'''
-def addB(ndata,xs:tuple,type:int,pardir:str)->tuple:
-    def isDir(xs:tuple)->bool:
-        if len(data(xs)) == 2:
-             return True
-        else:
-             return False
-    
-    def isFile(xs:tuple)->bool:
-         if len(xs) == 4:
-              return True
-         else:
-              return False
-          
-    def addFile(nFile,fxs,fpardir):
-         if searchDir(fxs,fpardir):
-            if fxs:
-                if isFile(nFile):
-                    if data(data(fxs)) == fpardir:
-                           if(n1(fxs)):
-                                addFile(nFile,n1(fxs),fpardir)
-                           else:
-                                return Cons(data(fxs),Cons(nFile),n2(fxs),n3(fxs),n4(fxs))
-                           if n2(fxs):
-                                addFile(nFile,n2(fxs),fpardir)
-                           else:
-                                return Cons(data(fxs),n1(fxs),Cons(nFile),n3(fxs),n4(fxs))
-                           if n3(fxs):
-                                addFile(nFile,n3(fxs,fpardir))
-                           else:
-                                return Cons(data(fxs),n1(fxs),n2(fxs),Cons(nFile),n4(fxs))
-                           if n4(fxs):
-                                addFile(nFile,n4(fxs,fpardir))
-                           else:
-                                return Cons(data(fxs),n1(fxs),n2(fxs),n3(fxs),Cons(nFile))
-                    elif addFile(nFile,n1(fxs),fpardir):
-                         return Cons(data(fxs),addFile(nFile,n1(fxs),fpardir))
-                    elif addFile(nFile,n2(fxs),fpardir):
-                         return Cons(data(fxs),addFile(nFile,n2(fxs),fpardir))
-                    elif addFile(nFile,n3(fxs),fpardir):
-                         return Cons(data(fxs),addFile(nFile,n3(fxs),fpardir))
-                    elif addFile(nFile,n4(fxs),fpardir):
-                         return Cons(nFile,n4(fxs),fpardir)
-                           
-
-    if type == 1:
-         return addFile(File(ndata),xs,pardir)
-'''   
+               return True
+          elif searchDir(n1(xs),sname) is True:
+               return True
+          elif searchDir(n2(xs),sname) is True:
+               return True
+          elif searchDir(n3(xs),sname) is True:
+               return True
+          elif searchDir(n4(xs),sname) is True:
+               return True
+          else:
+               return False
 
 
 
@@ -143,7 +74,7 @@ def printTree(xs, prefix="", is_last=True):
     if xs is Nil:
         return
 
-    # Print current node
+    # Print xs node
     print(prefix, end="")
     print("└── " if is_last else "├── ", end="")
     print(data(data(xs)))
@@ -168,8 +99,12 @@ def printTree(xs, prefix="", is_last=True):
 def isDir(xs:tuple)->bool:
         if len(data(xs)) == 2:
              return True
-        else:
-             return False
+        return False
+        
+def isFile(xs):
+     if len(data(xs)) == 4:
+          return True
+     return False
 
 
     
@@ -222,61 +157,43 @@ def addFile(fxs,fparDir,nFile):
             elif searchDir(n4(fxs),fparDir):
                 return Cons(data(fxs),n1(fxs),n2(fxs),n3(fxs),addFile(n4(fxs),fparDir,nFile))
 
+def modify(xs,name,)
+        
 
 
-'''
-def add_folder_on_folder(sub_tree, new_node):
-  if(left(sub_tree) is Nil):
-    return Node(update_elements(sub_tree),Node(Folder(new_node)),midleft(sub_tree),midright(sub_tree),right(sub_tree))
-  elif(midleft(sub_tree) is Nil):
-    return Node(update_elements(sub_tree),left(sub_tree),Node(Folder(new_node)),midright(sub_tree),right(sub_tree))
-  elif(midright(sub_tree) is Nil):
-    return Node(update_elements(sub_tree), left(sub_tree),midleft(sub_tree), Node(Folder(new_node)),right(sub_tree))
-  elif(right(sub_tree) is Nil):
-    return Node(update_elements(sub_tree), left(sub_tree),midleft(sub_tree),midright(sub_tree), Node(Folder(new_node)))
+def showPath(name: str, xs, path="/"):
+  
+  l = []
+  if (xs):
 
-def add_file_on_folder(sub_tree: tuple, new_file_name: str, weight: int):
-  data_file= data_name_file(new_file_name)
-  if(left(sub_tree) is Nil):
-    return Node(object(sub_tree), Node(File(data_file[0],data_file[1],weight)),midleft(sub_tree),midright(sub_tree),right(sub_tree))
-  elif(midleft(sub_tree) is Nil):
-    return Node(object(sub_tree),left(sub_tree),Node(File(data_file[0],data_file[1],weight)),midright(sub_tree),right(sub_tree))
-  elif( midright(sub_tree) is Nil):
-    return Node(object(sub_tree), left(sub_tree),midleft(sub_tree), Node(File(data_file[0],data_file[1],weight)),right(sub_tree))
-  elif(right(sub_tree) is Nil):
-    return Node(object(sub_tree), left(sub_tree),midleft(sub_tree),midright(sub_tree), Node(File(data_file[0],data_file[1],weight)))
+    if (data(data(xs)) == name):
+      l.append( path + data(data(xs)))
+    else:
+      n1S = showPath(name, n1(xs),
+                             f'{ path}{data(data(xs))}/')
+      if (n1S):
+        l.append(n1S)
 
-def add_folder(sub_tree, folder_name, new_name, choice):
-  if(sub_tree and search_node(sub_tree,folder_name)):
-      if(name_object(sub_tree)==folder_name and is_folder(sub_tree)):
-        return add_folder_on_folder(sub_tree,new_name)
-      elif(search_node(left(sub_tree), folder_name)):
-        return Node(object(sub_tree), add_folder(left(sub_tree), folder_name, new_name,choice),midleft(sub_tree),midright(sub_tree),right(sub_tree))
-      elif(search_node(midleft(sub_tree),folder_name)):
-        return Node(object(sub_tree), left(sub_tree), add_folder(midleft(sub_tree), folder_name,new_name,choice),midright(sub_tree),right(sub_tree))
-      elif(search_node(midright(sub_tree),folder_name)):
-        return Node(object(sub_tree), left(sub_tree), midleft(sub_tree),add_folder(midright(sub_tree), folder_name, new_name,choice),right(sub_tree))
-      elif((search_node(right(sub_tree), folder_name))):
-        return Node(object(sub_tree), left(sub_tree), midleft(sub_tree),midright(sub_tree),add_folder(right(sub_tree),folder_name,new_name,choice))
-  else:
-      return
-    
-def add_file(sub_tree, folder_name, new_file_name, weight):
-  if(sub_tree and search_node(sub_tree,folder_name)):
-      if(name_object(sub_tree)==folder_name and is_folder(sub_tree)):
-        return add_file_on_folder(sub_tree, new_file_name,weight)
-      elif(search_node(left(sub_tree), folder_name)):
-        return Node(object(sub_tree), add_file(left(sub_tree), folder_name, new_file_name,weight),midleft(sub_tree),midright(sub_tree),right(sub_tree))
-      elif(search_node(midleft(sub_tree),folder_name)):
-        return Node(object(sub_tree), left(sub_tree), add_file(midleft(sub_tree), folder_name, new_file_name,weight),midright(sub_tree),right(sub_tree))
-      elif(search_node(midright(sub_tree),folder_name)):
-        return Node(object(sub_tree), left(sub_tree), midleft(sub_tree),add_file(midright(sub_tree), folder_name, new_file_name,weight),right(sub_tree))
-      elif((search_node(right(sub_tree), folder_name))):
-        return Node(object(sub_tree), left(sub_tree), midleft(sub_tree),midright(sub_tree),add_file(right(sub_tree),folder_name,new_file_name, weight))
-  else:
-      return
+      n2S = showPath(name, n2(xs),
+                              f'{path}{data(data(xs))}/')
+      if (n2S):
+        l.append(n2S)
 
-'''
+      n3S = showPath(name, n3(xs),
+                              f'{path}{data(data(xs))}/')
+
+      if (n3S):
+        l.append(n3S)
+      n4S = showPath(name, n4(xs),
+                              f'{path}{data(data(xs))}/')
+      if (n4S):
+        l.append(n4S)
+    return l
+             
+             
+             
+            
+     
 
 
 
@@ -284,4 +201,6 @@ if __name__ == '__main__':
     X = Cons(Directory("Root"),Cons(Directory("Dir1"),Cons(File("file1.txt 42")),Cons(File("fil.cpp 1"))),Cons(Directory("Dir2")),Cons(File("aa.jpeg 52")))
     Y = addDirectory(X,"Root*","aaaa")
     Z = addFile(Y,"aaaa*","asasa.aa 12")
-    printTree(Z)      
+    W = addDirectory(Z,"Dir2*","Dir1")
+    print(showPath("Dir1*",W))
+    printTree(W)      
