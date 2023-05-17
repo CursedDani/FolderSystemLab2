@@ -101,11 +101,10 @@ def isDir(xs:tuple)->bool:
              return True
         return False
         
-def isFile(xs):
+def isFile(xs)->bool:
      if len(data(xs)) == 4:
           return True
      return False
-
 
     
 def addDirectory(fxs,fparDir,nDirectory):
@@ -144,6 +143,8 @@ def addFile(fxs,fparDir,nFile):
                 return Cons(data(fxsa),n1(fxsa), n2(fxsa) , Cons(File(nFilea)),n4(fxsa))
             elif not n4(fxsa):
                 return Cons(data(fxsa),n1(fxsa),n2(fxsa),n3(fxsa),Cons(File(nFilea)))
+            else:
+                 print("Directory Full")
             
         if fxs and searchDir(fxs,fparDir):
             if data(data(fxs)) == fparDir and isDir(fxs):
@@ -157,8 +158,33 @@ def addFile(fxs,fparDir,nFile):
             elif searchDir(n4(fxs),fparDir):
                 return Cons(data(fxs),n1(fxs),n2(fxs),n3(fxs),addFile(n4(fxs),fparDir,nFile))
 
-def modify(xs,name,)
-        
+
+def delete(xs,name):
+     if xs and searchDir(xs,name):
+          if data(data(xs)) == name:
+               return Nil
+          elif searchDir(n1(xs),name):
+               return Cons(data(xs),delete(n1(xs),name),n2(xs),n3(xs),n4(xs))
+          elif searchDir(n2(xs),name):
+               return Cons(data(xs),n1(xs),delete(n2(xs),name),n3(xs),n4(xs))
+          elif searchDir(n3(xs),name):
+               return Cons(data(xs),n1(xs),n2(xs),delete(n3(xs),name),n4(xs))
+          elif searchDir(n4(xs),name):
+               return Cons(data(xs),n1(xs),n2(xs),n3(xs),delete(n4(xs),name))   
+
+
+def Modify(xs,oName):
+     def modFile(fxsa,nFilea):
+            if not n1(fxsa):
+                return Cons(data(fxsa),Cons(File(nFilea)),n2(fxsa),n3(fxsa),n4(fxsa))
+            elif not n2(fxsa):
+                return Cons(data(fxsa),n1(fxsa),Cons(File(nFilea)),n3(fxsa),n4(fxsa))
+            elif not n3(fxsa):
+                return Cons(data(fxsa),n1(fxsa), n2(fxsa) , Cons(File(nFilea)),n4(fxsa))
+            elif not n4(fxsa):
+                return Cons(data(fxsa),n1(fxsa),n2(fxsa),n3(fxsa),Cons(File(nFilea)))
+     
+     
 
 
 def showPath(name: str, xs, path="/"):
@@ -189,6 +215,8 @@ def showPath(name: str, xs, path="/"):
       if (n4S):
         l.append(n4S)
     return l
+    
+          
              
              
              
@@ -202,5 +230,6 @@ if __name__ == '__main__':
     Y = addDirectory(X,"Root*","aaaa")
     Z = addFile(Y,"aaaa*","asasa.aa 12")
     W = addDirectory(Z,"Dir2*","Dir1")
+    a = delete(W,"Dir1*")
     print(showPath("Dir1*",W))
-    printTree(W)      
+    printTree(a)      
